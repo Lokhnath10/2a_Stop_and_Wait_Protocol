@@ -12,33 +12,37 @@ To write a python program to perform stop and wait protocol
 ## CLIENT
 ```
 import socket
-from datetime import datetime
 s=socket.socket()
 s.bind(('localhost',8000))
 s.listen(5)
 c,addr=s.accept()
-print("Client Address : ",addr)
-now = datetime.now()
-c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
-ack=c.recv(1024).decode()
-if ack:
- print(ack)
-c.close()
+while True:
+    i=input("Enter a data: ")
+    c.send(i.encode())
+    ack=c.recv(1024).decode()
+    if ack:
+        print(ack)
+        continue
+    else:
+        c.close()
+        break
 ```
 ## SERVER
 ```
 import socket
 s=socket.socket()
 s.connect(('localhost',8000))
-print(s.getsockname())
-print(s.recv(1024).decode())
-s.send("acknowledgement recived from the server".encode())
+while True:
+ print(s.recv(1024).decode())
+ s.send("Acknowledgement Recived".encode())
 ```
 ## OUTPUT
 ## CLIENT
-![image](https://github.com/Lokhnath10/2a_Stop_and_Wait_Protocol/assets/138969918/74bce44a-d15a-46f4-ac38-6ee2eac02ea7)
+![Screenshot 2024-03-05 213105](https://github.com/Lokhnath10/2a_Stop_and_Wait_Protocol/assets/138969918/92e66f7b-fe0b-4455-813b-5154c8a8096c)
+
 ## SERVER
-![image](https://github.com/Lokhnath10/2a_Stop_and_Wait_Protocol/assets/138969918/a7634386-dd70-4da8-bc41-1ddb96ff0dfc)
+![image](https://github.com/Lokhnath10/2a_Stop_and_Wait_Protocol/assets/138969918/64447681-90d5-49f6-bda8-31aa85940877)
+
 
 ## RESULT
 Thus, python program to perform stop and wait protocol was successfully executed.
